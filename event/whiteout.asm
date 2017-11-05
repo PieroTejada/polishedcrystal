@@ -23,7 +23,6 @@ Script_Whiteout: ; 0x124ce
 	waitbutton
 	special FadeOutPalettes
 	pause 40
-	special HealPartyEvenForNuzlocke
 	callasm GetWhiteoutSpawn
 	farscall Script_AbortBugContest
 	special WarpToSpawnPoint

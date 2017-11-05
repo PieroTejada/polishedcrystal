@@ -2957,32 +2957,9 @@ UnknownText_0xf739: ; 0xf739
 
 
 SquirtBottle: ; f73e
-	farjp _Squirtbottle
-; f745
-
-
-CardKey: ; f745
-	farjp _CardKey
-; f74c
-
-
-BasementKey: ; f74c
-	farjp _BasementKey
-; f753
-
-
 SacredAsh: ; f753
-	ld a, [InitialOptions]
-	bit NUZLOCKE_MODE, a
-	jp nz, Revive_NuzlockeFailureMessage
-
-	farcall _SacredAsh
-	ld a, [wItemEffectSucceeded]
-	cp $1
-	ret nz
-	jp UseDisposableItem
-; f763
-
+CardKey: ; f745
+BasementKey: ; f74c
 BrightPowder:
 LuckyPunch:
 MetalPowder:

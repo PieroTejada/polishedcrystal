@@ -346,12 +346,10 @@ Script_AbortBugContest: ; 0x122c1
 	checkflag ENGINE_BUG_CONTEST_TIMER
 	iffalse .finish
 	setflag ENGINE_DAILY_BUG_CONTEST
-	special ContestReturnMons
 .finish
 	end
 
 INCLUDE "event/itemball.asm"
-INCLUDE "engine/healmachineanim.asm"
 INCLUDE "event/whiteout.asm"
 INCLUDE "event/forced_movement.asm"
 INCLUDE "event/itemfinder.asm"
@@ -3638,10 +3636,6 @@ INCLUDE "engine/bsod.asm"
 INCLUDE "event/stats_judge.asm"
 
 INCLUDE "event/poisonstep.asm"
-INCLUDE "event/squirtbottle.asm"
-INCLUDE "event/card_key.asm"
-INCLUDE "event/basement_key.asm"
-INCLUDE "event/sacred_ash.asm"
 
 
 SECTION "bank14", ROMX
