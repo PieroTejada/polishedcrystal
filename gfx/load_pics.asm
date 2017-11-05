@@ -175,62 +175,10 @@ _GetFrontpic: ; 510a5
 	ret
 
 GetFrontpicPointer: ; 510d7
-GLOBAL PicPointers, PikachuPicPointers, PichuPicPointers, ArbokPicPointers, MagikarpPicPointers, UnownPicPointers, MewtwoPicPointers
-
 	ld a, [CurPartySpecies]
-	cp PIKACHU
-	jr z, .pikachu
-	cp PICHU
-	jr z, .pichu
-	cp ARBOK
-	jr z, .arbok
-	cp MAGIKARP
-	jr z, .magikarp
-	cp UNOWN
-	jr z, .unown
-	cp MEWTWO
-	jr z, .mewtwo
 	ld a, [CurPartySpecies]
 	ld d, BANK(PicPointers)
 	ld hl, PicPointers
-	jr .ok
-
-.pikachu
-	ld a, [MonVariant]
-	ld d, BANK(PikachuPicPointers)
-	ld hl, PikachuPicPointers
-	jr .ok
-
-.pichu
-	ld a, [MonVariant]
-	ld d, BANK(PichuPicPointers)
-	ld hl, PichuPicPointers
-	jr .ok
-
-.arbok
-	ld a, [MonVariant]
-	ld d, BANK(ArbokPicPointers)
-	ld hl, ArbokPicPointers
-	jr .ok
-
-.magikarp
-	ld a, [MonVariant]
-	ld d, BANK(MagikarpPicPointers)
-	ld hl, MagikarpPicPointers
-	jr .ok
-
-.unown
-	ld a, [MonVariant]
-	ld d, BANK(UnownPicPointers)
-	ld hl, UnownPicPointers
-	jr .ok
-
-.mewtwo
-	ld a, [MonVariant]
-	ld d, BANK(MewtwoPicPointers)
-	ld hl, MewtwoPicPointers
-
-.ok
 	dec a
 	ld bc, 6
 	call AddNTimes
@@ -263,15 +211,6 @@ GetAnimatedFrontpic: ; 51103
 	and $f
 	ld de, w6_d800 + 5 * 5 tiles
 	ld c, 5 * 5
-if !DEF(FAITHFUL)
-	push af
-	ld a, [CurSpecies]
-	cp DIGLETT
-	jr nz, .not_alolan_diglett
-	ld c, 5 * 5 + 10
-.not_alolan_diglett
-	pop af
-endc
 	cp 5
 	jr z, .got_dims
 	ld de, w6_d800 + 6 * 6 tiles
@@ -338,23 +277,7 @@ endc
 
 .LargeSpriteSizes:
 ; species, max tile - size + 1
-	db PIKACHU,    $63 - 7 * 7 + 1 ; Flying Pikachu
-	db GLACEON,    $64 - 7 * 7 + 1
-if !DEF(FAITHFUL)
-	db DUGTRIO,    $6e - 7 * 7 + 1
-endc
-	db MAMOSWINE,  $6f - 7 * 7 + 1
-	db PORYGON_Z,  $6f - 7 * 7 + 1
-	db SYLVEON,    $71 - 7 * 7 + 1
-	db MISMAGIUS,  $71 - 7 * 7 + 1
-	db ELECTIVIRE, $76 - 7 * 7 + 1
-	db WEAVILE,    $80 - 7 * 7 + 1
-	db LEAFEON,    $81 - 7 * 7 + 1
-	db GLISCOR,    $83 - 7 * 7 + 1
-	db RHYPERIOR,  $85 - 7 * 7 + 1
-	db TOGEKISS,   $88 - 7 * 7 + 1
-	db MAGMORTAR,  $8b - 7 * 7 + 1
-	db -1,         7 * 7
+	db -1, 7 * 7
 
 LoadOrientedFrontpicTiles: ; 5114f
 	ld hl, wDecompressScratch
@@ -395,50 +318,9 @@ GetBackpic: ; 5116c
 	ld [rSVBK], a
 	push de
 
-GLOBAL PicPointers, PikachuPicPointers, PichuPicPointers, ArbokPicPointers, MagikarpPicPointers, UnownPicPointers, MewtwoPicPointers
 	ld hl, PicPointers
 	ld a, b
 	ld d, BANK(PicPointers)
-	cp PIKACHU
-	jr nz, .not_pikachu
-	ld hl, PikachuPicPointers
-	ld a, c
-	ld d, BANK(PikachuPicPointers)
-	jr .ok
-.not_pikachu
-	cp PICHU
-	jr nz, .not_pichu
-	ld hl, PichuPicPointers
-	ld a, c
-	ld d, BANK(PichuPicPointers)
-	jr .ok
-.not_pichu
-	cp ARBOK
-	jr nz, .not_arbok
-	ld hl, ArbokPicPointers
-	ld a, c
-	ld d, BANK(ArbokPicPointers)
-	jr .ok
-.not_arbok
-	cp MAGIKARP
-	jr nz, .not_magikarp
-	ld hl, MagikarpPicPointers
-	ld a, c
-	ld d, BANK(MagikarpPicPointers)
-	jr .ok
-.not_magikarp
-	cp UNOWN
-	jr nz, .not_unown
-	ld hl, UnownPicPointers
-	ld a, c
-	ld d, BANK(UnownPicPointers)
-.not_unown
-	cp MEWTWO
-	jr nz, .ok
-	ld hl, MewtwoPicPointers
-	ld a, c
-	ld d, BANK(MewtwoPicPointers)
-.ok
 	dec a
 	ld bc, 6
 	call AddNTimes

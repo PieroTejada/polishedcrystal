@@ -1172,25 +1172,25 @@ endr
 
 
 JohtoGrassWildMons: ; 0x2a5e9
-INCLUDE "data/wild/johto_grass.asm"
+	db -1 ; end
 
 JohtoWaterWildMons: ; 0x2b11d
-INCLUDE "data/wild/johto_water.asm"
+	db -1 ; end
 
 KantoGrassWildMons: ; 0x2b274
-INCLUDE "data/wild/kanto_grass.asm"
+	db -1 ; end
 
 KantoWaterWildMons: ; 0x2b7f7
-INCLUDE "data/wild/kanto_water.asm"
+	db -1 ; end
 
 OrangeGrassWildMons:
-INCLUDE "data/wild/orange_grass.asm"
+	db -1 ; end
 
 OrangeWaterWildMons:
-INCLUDE "data/wild/orange_water.asm"
+	db -1 ; end
 
 SwarmGrassWildMons: ; 0x2b8d0
-INCLUDE "data/wild/swarm_grass.asm"
+	db -1 ; end
 
 SwarmWaterWildMons: ; 0x2b92f
-INCLUDE "data/wild/swarm_water.asm"
+	db -1 ; end

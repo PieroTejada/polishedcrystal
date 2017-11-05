@@ -15,7 +15,6 @@ ROMX $03
 ROMX $04
 	org $4000
 	"bank4"
-	"Variant Pic Pointers"
 
 ROMX $05
 	org $4000
@@ -110,7 +109,6 @@ ROMX $28
 
 ROMX $29
 	org $4000
-	"Pic Animations 4"
 
 ROMX $2E
 	org $4000
@@ -134,11 +132,9 @@ ROMX $34
 
 ROMX $35
 	org $4000
-	"Pic Animations 2"
 
 ROMX $36
 	org $4000
-	"Pic Animations 3"
 
 ROMX $38
 	org $4000

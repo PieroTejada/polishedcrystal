@@ -5629,12 +5629,6 @@ INCLUDE "gfx/pics/anims.asm"
 INCLUDE "gfx/pics/extra_pointers.asm"
 INCLUDE "gfx/pics/extras.asm"
 
-; Variants have their own animation data despite having entries in the main tables
-INCLUDE "gfx/pics/variant_anim_pointers.asm"
-INCLUDE "gfx/pics/variant_anims.asm"
-INCLUDE "gfx/pics/variant_extra_pointers.asm"
-INCLUDE "gfx/pics/variant_extras.asm"
-
 
 SECTION "Pic Animations 2", ROMX
 
@@ -5642,20 +5636,11 @@ INCLUDE "gfx/pics/frame_pointers.asm"
 INCLUDE "gfx/pics/kanto_frames.asm"
 
 
-SECTION "Pic Animations 3", ROMX
-
-INCLUDE "gfx/pics/johto_frames.asm"
-INCLUDE "gfx/pics/variant_frame_pointers.asm"
-INCLUDE "gfx/pics/variant_frames.asm"
-
-
 SECTION "Pic Animations 4", ROMX
 
 ; Bitmasks
 INCLUDE "gfx/pics/bitmask_pointers.asm"
 INCLUDE "gfx/pics/bitmasks.asm"
-INCLUDE "gfx/pics/variant_bitmask_pointers.asm"
-INCLUDE "gfx/pics/variant_bitmasks.asm"
 
 
 SECTION "bank38", ROMX

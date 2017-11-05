@@ -436,37 +436,6 @@ PokeAnim_StopWaitAnim: ; d02e4
 	ret
 ; d02ec
 
-PokeAnim_IsPikachu:
-	ld a, [wPokeAnimSpecies]
-	cp PIKACHU
-	ret
-
-PokeAnim_IsPichu:
-	ld a, [wPokeAnimSpecies]
-	cp PICHU
-	ret
-
-PokeAnim_IsArbok:
-	ld a, [wPokeAnimSpecies]
-	cp ARBOK
-	ret
-
-PokeAnim_IsMagikarp:
-	ld a, [wPokeAnimSpecies]
-	cp MAGIKARP
-	ret
-
-PokeAnim_IsUnown: ; d02ec
-	ld a, [wPokeAnimSpecies]
-	cp UNOWN
-	ret
-; d02f2
-
-PokeAnim_IsMewtwo:
-	ld a, [wPokeAnimSpecies]
-	cp MEWTWO
-	ret
-
 PokeAnim_IsEgg: ; d02f2
 	ld a, [wPokeAnimSpecies]
 	cp EGG
@@ -910,40 +879,9 @@ GetMonAnimPointer: ; d055c
 	call PokeAnim_IsEgg
 	jr z, .egg
 
-	ld c, BANK(PikachuAnimations)
-	ld hl, PikachuAnimationPointers
-	ld de, PikachuAnimationExtraPointers
-	call PokeAnim_IsPikachu
-	jr z, .variant
-	ld c, BANK(PichuAnimations)
-	ld hl, PichuAnimationPointers
-	ld de, PichuAnimationExtraPointers
-	call PokeAnim_IsPichu
-	jr z, .variant
-	ld c, BANK(ArbokAnimations)
-	ld hl, ArbokAnimationPointers
-	ld de, ArbokAnimationExtraPointers
-	call PokeAnim_IsArbok
-	jr z, .variant
-	ld c, BANK(MagikarpAnimations)
-	ld hl, MagikarpAnimationPointers
-	ld de, MagikarpAnimationExtraPointers
-	call PokeAnim_IsMagikarp
-	jr z, .variant
-	ld c, BANK(UnownAnimations)
-	ld hl, UnownAnimationPointers
-	ld de, UnownAnimationExtraPointers
-	call PokeAnim_IsUnown
-	jr z, .variant
-	ld c, BANK(MewtwoAnimations)
-	ld hl, MewtwoAnimationPointers
-	ld de, MewtwoAnimationExtraPointers
-	call PokeAnim_IsMewtwo
-	jr z, .variant
 	ld c, BANK(PicAnimations)
 	ld hl, AnimationPointers
 	ld de, AnimationExtraPointers
-.variant
 
 	ld a, [wPokeAnimExtraFlag]
 	and a
@@ -1007,40 +945,10 @@ GetMonFramesPointer: ; d05ce
 	call PokeAnim_IsEgg
 	jr z, .egg
 
-	call PokeAnim_IsPikachu
-	lb bc, BANK(PikachuFramesPointers), BANK(PikachusFrames)
-	ld hl, PikachuFramesPointers
-	jr z, .got_frames
-	call PokeAnim_IsPichu
-	lb bc, BANK(PichuFramesPointers), BANK(PichusFrames)
-	ld hl, PichuFramesPointers
-	jr z, .got_frames
-	call PokeAnim_IsArbok
-	lb bc, BANK(ArbokFramesPointers), BANK(ArboksFrames)
-	ld hl, ArbokFramesPointers
-	jr z, .got_frames
-	call PokeAnim_IsMagikarp
-	lb bc, BANK(MagikarpFramesPointers), BANK(MagikarpsFrames)
-	ld hl, MagikarpFramesPointers
-	jr z, .got_frames
-	call PokeAnim_IsUnown
-	lb bc, BANK(UnownFramesPointers), BANK(UnownsFrames)
-	ld hl, UnownFramesPointers
-	jr z, .got_frames
-	call PokeAnim_IsMewtwo
-	lb bc, BANK(MewtwoFramesPointers), BANK(MewtwosFrames)
-	ld hl, MewtwoFramesPointers
-	jr z, .got_frames
-	ld a, [wPokeAnimSpecies]
-	cp CHIKORITA
-	lb bc, BANK(FramesPointers), BANK(KantoFrames)
 	ld hl, FramesPointers
-	jr c, .got_frames
-	ld c, BANK(JohtoFrames)
-.got_frames
+	ld c, BANK(KantoFrames)
 	ld a, c
 	ld [wPokeAnimFramesBank], a
-
 	ld a, [wPokeAnimSpeciesOrVariant]
 	dec a
 	ld e, a
@@ -1048,7 +956,7 @@ GetMonFramesPointer: ; d05ce
 rept 2
 	add hl, de
 endr
-	ld a, b
+	ld a, BANK(FramesPointers)
 	call GetFarHalfword
 	ld a, l
 	ld [wPokeAnimFramesAddr], a
@@ -1072,35 +980,9 @@ GetMonBitmaskPointer: ; d061b
 	call PokeAnim_IsEgg
 	jr z, .egg
 
-	call PokeAnim_IsPikachu
-	ld a, BANK(PikachuBitmasksPointers)
-	ld hl, PikachuBitmasksPointers
-	jr z, .variant
-	call PokeAnim_IsPichu
-	ld a, BANK(PichuBitmasksPointers)
-	ld hl, PichuBitmasksPointers
-	jr z, .variant
-	call PokeAnim_IsArbok
-	ld a, BANK(ArbokBitmasksPointers)
-	ld hl, ArbokBitmasksPointers
-	jr z, .variant
-	call PokeAnim_IsMagikarp
-	ld a, BANK(MagikarpBitmasksPointers)
-	ld hl, MagikarpBitmasksPointers
-	jr z, .variant
-	call PokeAnim_IsUnown
-	ld a, BANK(UnownBitmasksPointers)
-	ld hl, UnownBitmasksPointers
-	jr z, .variant
-	call PokeAnim_IsMewtwo
-	ld a, BANK(MewtwoBitmasksPointers)
-	ld hl, MewtwoBitmasksPointers
-	jr z, .variant
 	ld a, BANK(BitmasksPointers)
 	ld hl, BitmasksPointers
-.variant
 	ld [wPokeAnimBitmaskBank], a
-
 	ld a, [wPokeAnimSpeciesOrVariant]
 	dec a
 	ld e, a
@@ -1129,23 +1011,7 @@ endr
 ; d065c
 
 PokeAnim_GetSpeciesOrVariant: ; d065c
-	call PokeAnim_IsPikachu
-	jr z, .variant
-	call PokeAnim_IsPichu
-	jr z, .variant
-	call PokeAnim_IsArbok
-	jr z, .variant
-	call PokeAnim_IsMagikarp
-	jr z, .variant
-	call PokeAnim_IsUnown
-	jr z, .variant
-	call PokeAnim_IsMewtwo
-	jr z, .variant
 	ld a, [wPokeAnimSpecies]
-	ret
-
-.variant
-	ld a, [wPokeAnimVariant]
 	ret
 ; d0669
 
