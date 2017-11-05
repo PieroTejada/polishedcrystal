@@ -295,8 +295,6 @@ Gen2ToGen2LinkComms: ; 28177
 	jp Function28b22
 
 .ready_to_trade
-	ld de, MUSIC_ROUTE_30
-	call PlayMusic
 	jp InitTradeMenuDisplay
 ; 283b2
 

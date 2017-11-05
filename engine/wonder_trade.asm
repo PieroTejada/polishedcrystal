@@ -68,8 +68,6 @@ WonderTrade::
 
 	eventflagset EVENT_GOT_GS_BALL_FROM_POKECOM_CENTER
 	eventflagset EVENT_CAN_GIVE_GS_BALL_TO_KURT
-	ld de, MUSIC_SPIKY_EARED_PICHU_HGSS
-	call PlayMusic
 	ld hl, .Text_WonderTradeForGSBallPichuText
 	jp PrintText
 

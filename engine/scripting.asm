@@ -914,9 +914,7 @@ Script_check_just_battled:
 	ret
 
 Script_encountermusic:
-	ld a, [OtherTrainerClass]
-	ld e, a
-	farjp PlayTrainerEncounterMusic
+	ret
 
 Script_playmapmusic:
 	jp PlayMapMusic

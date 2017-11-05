@@ -366,42 +366,6 @@ Special_GiveParkBalls: ; 135db
 	ld [wParkBallsRemaining], a
 	farjp StartBugContestTimer
 
-BugCatchingContestBattleScript:: ; 0x135eb
-	writecode VAR_BATTLETYPE, BATTLETYPE_CONTEST
-	randomwildmon
-	startbattle
-	reloadmapafterbattle
-	copybytetovar wParkBallsRemaining
-	iffalse BugCatchingContestOutOfBallsScript
-	end
-
-BugCatchingContestOverScript:: ; 0x135f8
-	playsound SFX_ELEVATOR_END
-	opentext
-	writetext BugCatchingContestText_BeeepTimesUp
-	waitbutton
-	jump BugCatchingContestReturnToGateScript
-
-BugCatchingContestOutOfBallsScript: ; 0x13603
-	playsound SFX_ELEVATOR_END
-	opentext
-	writetext BugCatchingContestText_ContestIsOver
-	waitbutton
-
-BugCatchingContestReturnToGateScript: ; 0x1360b
-	closetext
-	jumpstd bugcontestresultswarp
-
-BugCatchingContestText_BeeepTimesUp: ; 0x1360f
-	; ANNOUNCER: BEEEP! Time's up!
-	text_jump UnknownText_0x1bd2ca
-	db "@"
-
-BugCatchingContestText_ContestIsOver: ; 0x13614
-	; ANNOUNCER: The Contest is over!
-	text_jump UnknownText_0x1bd2e7
-	db "@"
-
 RepelWoreOffScript:: ; 0x13619
 	thistext
 
@@ -453,47 +417,8 @@ SetMemEvent: ; 1364f
 
 CheckFacingTileForStd:: ; 1365b
 ; Checks to see if the tile you're facing has a std script associated with it.  If so, executes the script and returns carry.
-	ld a, c
-	ld de, 3
-	ld hl, .table1
-	call IsInArray
-	jr nc, .notintable
-
-	ld a, jumpstd_command
-	ld [wJumpStdScriptBuffer], a
-	inc hl
-	ld a, [hli]
-	ld [wJumpStdScriptBuffer + 1], a
-	ld a, [hli]
-	ld [wJumpStdScriptBuffer + 2], a
-	ld a, BANK(Script_JumpStdFromRAM)
-	ld hl, Script_JumpStdFromRAM
-	call CallScript
-	scf
-	ret
-
-.notintable
 	xor a
 	ret
-
-.table1
-	dbw COLL_BOOKSHELF,       magazinebookshelf
-	dbw COLL_TRASH_CAN,       trashcan
-	dbw COLL_PC,              pcscript
-	dbw COLL_RADIO,           radio1
-	dbw COLL_TOWN_MAP,        townmap
-	dbw COLL_MART_SHELF,      merchandiseshelf
-	dbw COLL_TV,              tv
-	dbw COLL_POKECENTER_SIGN, pokecentersign
-	dbw COLL_MART_SIGN,       martsign
-	dbw COLL_VENDING_MACHINE, vendingmachine
-	dbw COLL_FRIDGE,          refrigerator
-	dbw COLL_SINK,            sink
-	dbw COLL_WINDOW,          window
-	dbw COLL_STOVE,           stove
-	dbw COLL_INCENSE,         incenseburner
-	dbw COLL_ELEVATOR_BUTTON, elevatorbutton
-	db -1 ; end
 
 Script_JumpStdFromRAM: ; 0x1369a
 	jump wJumpStdScriptBuffer
@@ -1450,170 +1375,10 @@ PlayBattleMusic: ; 2ee6c
 	call DelayFrame
 	call MaxVolume
 
-	; Are we fighting a trainer?
-	ld a, [OtherTrainerClass]
-	and a
-	jr nz, .trainermusic
-
-	ld a, [TempEnemyMonSpecies]
-	ld hl, .legendaries
-	call .loadfromarray
-	jr c, .done
-
-	ld hl, .regional_wilds
-	call .getregionmusicfromarray
-	jr .done
-
-.trainermusic
-	ld a, [OtherTrainerClass]
-	cp RIVAL2
-	jr nz, .not_rival2_4
-	ld a, [OtherTrainerID]
-	cp 4 ; Rival in Indigo Plateau
-	jr c, .not_rival2_4
-	ld de, MUSIC_CHAMPION_BATTLE
-	jr .done
-
-.not_rival2_4
-	ld a, [OtherTrainerClass]
-	cp GIOVANNI
-	jr nz, .othertrainer
-	ld a, [OtherTrainerID]
-	cp 1 ; Armored Mewtwo
-	jr nz, .othertrainer
-	ld de, MUSIC_MOTHER_BEAST_BATTLE_SM
-	jr .done
-
-.othertrainer
-	ld a, [OtherTrainerClass]
-	ld hl, .trainers
-	call .loadfromarray
-	jr c, .done
-
-	ld de, MUSIC_TRAINER_BATTLE_BW
-	ld a, [InBattleTowerBattle]
-	bit 0, a
-	jr nz, .done
-
-	ld de, MUSIC_KANTO_GYM_LEADER_BATTLE
-	farcall IsKantoGymLeader
-	jr c, .done
-
-	ld de, MUSIC_JOHTO_GYM_LEADER_BATTLE
-	farcall IsJohtoGymLeader
-	jr c, .done
-
-	ld a, [wLinkMode]
-	and a
-	ld de, MUSIC_JOHTO_TRAINER_BATTLE
-	jr nz, .done
-
-	ld hl, .regional_trainers
-	call .getregionmusicfromarray
-
-.done
-	call PlayMusic
-
 	pop bc
 	pop de
 	pop hl
 	ret
-
-.loadfromarray
-	ld e, 3
-	call IsInArray
-	ret nc
-	inc hl
-	jr .found
-
-.getregionmusicfromarray
-	push hl
-	farcall RegionCheck
-	pop hl
-	ld a, e
-	and a ; Johto
-	jr nz, .ok
-	ld a, [TimeOfDay]
-	cp NITE
-	jr nz, .ok
-	ld e, 3 ; Johto at night
-.ok
-	ld d, 0
-	add hl, de
-	add hl, de
-.found
-	ld a, [hli]
-	ld d, [hl]
-	ld e, a
-	ret
-
-.trainers
-	dbw WILL,             MUSIC_ELITE_FOUR_BATTLE_SM
-	dbw KOGA,             MUSIC_ELITE_FOUR_BATTLE_SM
-	dbw BRUNO,            MUSIC_ELITE_FOUR_BATTLE_SM
-	dbw KAREN,            MUSIC_ELITE_FOUR_BATTLE_SM
-	dbw CHAMPION,         MUSIC_CHAMPION_BATTLE
-	dbw RED,              MUSIC_WCS_BATTLE_BW
-	dbw LEAF,             MUSIC_CHAMPION_BATTLE_B2W2
-	dbw RIVAL0,           MUSIC_RIVAL_BATTLE
-	dbw RIVAL1,           MUSIC_RIVAL_BATTLE
-	dbw RIVAL2,           MUSIC_RIVAL_BATTLE
-	dbw LYRA1,            MUSIC_RIVAL_BATTLE_XY
-	dbw LYRA2,            MUSIC_WALLY_BATTLE_ORAS
-	dbw GRUNTM,           MUSIC_ROCKET_BATTLE
-	dbw GRUNTF,           MUSIC_ROCKET_BATTLE
-	dbw ROCKET_SCIENTIST, MUSIC_ROCKET_BATTLE
-	dbw PROTON,           MUSIC_ROCKET_BATTLE
-	dbw PETREL,           MUSIC_ROCKET_BATTLE
-	dbw ARCHER,           MUSIC_ROCKET_BATTLE
-	dbw ARIANA,           MUSIC_ROCKET_BATTLE
-	dbw GIOVANNI,         MUSIC_ROCKET_BATTLE
-	dbw TOWERTYCOON,      MUSIC_FRONTIER_BRAIN_BATTLE_RSE
-	dbw JESSIE_JAMES,     MUSIC_ROCKET_BATTLE
-	dbw LORELEI,          MUSIC_KANTO_GYM_LEADER_BATTLE
-	dbw AGATHA,           MUSIC_KANTO_GYM_LEADER_BATTLE
-	dbw STEVEN,           MUSIC_CHAMPION_BATTLE_RSE
-	dbw CYNTHIA,          MUSIC_CHAMPION_BATTLE_DPPT
-	dbw CHERYL,           MUSIC_TRAINER_BATTLE_DPPT
-	dbw RILEY,            MUSIC_TRAINER_BATTLE_DPPT
-	dbw BUCK,             MUSIC_TRAINER_BATTLE_DPPT
-	dbw MARLEY,           MUSIC_TRAINER_BATTLE_DPPT
-	dbw MIRA,             MUSIC_TRAINER_BATTLE_DPPT
-	dbw ANABEL,           MUSIC_TRAINER_BATTLE_DPPT
-	dbw DARACH,           MUSIC_FRONTIER_BRAIN_BATTLE_RSE
-	dbw CAITLIN,          MUSIC_ELITE_FOUR_BATTLE_BW
-	dbw FLANNERY,         MUSIC_GYM_LEADER_BATTLE_RSE
-	dbw MAYLENE,          MUSIC_GYM_LEADER_BATTLE_DPPT
-	dbw SKYLA,            MUSIC_GYM_LEADER_BATTLE_BW
-	dbw VALERIE,          MUSIC_GYM_LEADER_BATTLE_XY
-	dbw LAWRENCE,         MUSIC_ZINNIA_BATTLE_ORAS
-	db -1
-
-.legendaries
-	dbw ARTICUNO, MUSIC_KANTO_LEGEND_BATTLE_XY
-	dbw ZAPDOS,   MUSIC_KANTO_LEGEND_BATTLE_XY
-	dbw MOLTRES,  MUSIC_KANTO_LEGEND_BATTLE_XY
-	dbw MEWTWO,   MUSIC_KANTO_LEGEND_BATTLE_XY
-	dbw MEW,      MUSIC_KANTO_LEGEND_BATTLE_XY
-	dbw RAIKOU,   MUSIC_SUICUNE_BATTLE
-	dbw ENTEI,    MUSIC_SUICUNE_BATTLE
-	dbw SUICUNE,  MUSIC_SUICUNE_BATTLE
-	dbw HO_OH,    MUSIC_HO_OH_BATTLE_HGSS
-	dbw LUGIA,    MUSIC_LUGIA_BATTLE_HGSS
-	dbw CELEBI,   MUSIC_SUICUNE_BATTLE
-	db -1
-
-.regional_trainers
-	dw MUSIC_JOHTO_TRAINER_BATTLE
-	dw MUSIC_KANTO_TRAINER_BATTLE
-	dw MUSIC_TRAINER_BATTLE_SM
-	dw MUSIC_JOHTO_TRAINER_BATTLE
-
-.regional_wilds
-	dw MUSIC_JOHTO_WILD_BATTLE
-	dw MUSIC_KANTO_WILD_BATTLE
-	dw MUSIC_WILD_BATTLE_SM
-	dw MUSIC_JOHTO_WILD_BATTLE_NIGHT
 
 ClearBattleRAM: ; 2ef18
 	xor a
@@ -5375,7 +5140,7 @@ INCLUDE "gfx/mail.asm"
 
 SECTION "bank2F", ROMX
 
-INCLUDE "engine/std_scripts.asm"
+StdScripts::
 
 INCLUDE "engine/phone_scripts.asm"
 

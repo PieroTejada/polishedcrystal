@@ -1387,13 +1387,6 @@ Text_GotchaMonWasCaught: ; 0xedc9
 	text_jump UnknownText_0x1c5b17
 	start_asm
 	call WaitSFX
-	push bc
-	ld de, MUSIC_NONE
-	call PlayMusic
-	call DelayFrame
-	ld de, MUSIC_CAPTURE
-	call PlayMusic
-	pop bc
 	ld hl, TextJump_Waitbutton
 	ret
 ; ede6

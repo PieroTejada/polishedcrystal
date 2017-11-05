@@ -101,8 +101,6 @@ endr
 ; 123bf
 
 .PlayHealMusic: ; 123bf
-	ld de, MUSIC_HEAL
-	call PlayMusic
 	jp .FlashPalettes8Times
 ; 123c8
 

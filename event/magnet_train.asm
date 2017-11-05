@@ -153,8 +153,7 @@ MagntTrain_LoadGFX_PlayMusic: ; 8ccc9
 rept 3
 	ld [hli], a
 endr
-	ld de, MUSIC_MAGNET_TRAIN
-	jp PlayMusic2
+	ret
 ; 8cd27
 
 DrawMagnetTrain: ; 8cd27

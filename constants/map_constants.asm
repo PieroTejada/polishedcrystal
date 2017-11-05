@@ -11,8 +11,8 @@ MAP_NONE   EQU 0
 
 	newgroup ; 2
 
-	mapgroup KRISS_HOUSE_2F, 3,  4
-	mapgroup NEW_BARK_TOWN, 9, 10
+	mapgroup KRISS_HOUSE_2F, 3,  3
+	mapgroup NEW_BARK_TOWN, 5, 8
 
 
 

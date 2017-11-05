@@ -2488,38 +2488,6 @@ AddBattleMoneyToAccount: ; 3d0be
 ; 3d0ea
 
 PlayVictoryMusic: ; 3d0ea
-	push de
-	ld de, MUSIC_NONE
-	call PlayMusic
-	call DelayFrame
-	ld de, MUSIC_WILD_VICTORY
-	ld a, [wBattleMode]
-	dec a
-	jr nz, .trainer_victory
-	push de
-	call IsAnyMonHoldingExpShare
-	pop de
-	jr nz, .play_music
-	ld hl, wPayDayMoney
-	ld a, [hli]
-	or [hl]
-	jr nz, .play_music
-	ld a, [wBattleParticipantsNotFainted]
-	and a
-	jr z, .lost
-	jr .play_music
-
-.trainer_victory
-	ld de, MUSIC_GYM_VICTORY
-	call IsBossTrainer
-	jr c, .play_music
-	ld de, MUSIC_TRAINER_VICTORY
-
-.play_music
-	call PlayMusic
-
-.lost
-	pop de
 	ret
 ; 3d123
 
@@ -3282,17 +3250,6 @@ FinalPkmnMusicAndAnimation:
 	ld c, 20
 	call DelayFrames
 	call SlideEnemyPicOut
-	; ...play the final Pokémon music...
-	call IsJohtoGymLeader
-	jr nc, .no_music
-	push de
-	ld de, MUSIC_NONE
-	call PlayMusic
-	call DelayFrame
-	ld de, MUSIC_FINAL_POKEMON_BW
-	call PlayMusic
-	pop de
-.no_music
 	; ...show their sprite and final dialog...
 	ld a, [TempEnemyMonSpecies]
 	push af

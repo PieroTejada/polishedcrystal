@@ -79,8 +79,6 @@ AnimateHallOfFame: ; 864c3
 	ld [wJumptableIndex], a
 	call LoadHOFTeam
 	jr c, .done
-	ld de, MUSIC_HALL_OF_FAME
-	call HallOfFame_PlayMusicDE
 	xor a
 	ld [wcf64], a
 .loop

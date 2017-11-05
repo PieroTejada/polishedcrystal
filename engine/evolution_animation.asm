@@ -79,9 +79,6 @@ EvolutionAnimation: ; 4e5e1
 	call PlayCry
 
 .skip_cry
-	ld de, MUSIC_EVOLUTION
-	call PlayMusic
-
 	ld c, 80
 	call DelayFrames
 

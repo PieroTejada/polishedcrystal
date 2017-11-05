@@ -1197,18 +1197,7 @@ DecorationDesc_PosterPointers: ; 26f84
 ; 26f91
 
 DecorationDesc_TownMapPoster: ; 0x26f91
-	opentext
-	writetext .TownMapText
-	waitbutton
-	special Special_TownMap
-	closetext
-	end
-; 0x26f9b
-
-.TownMapText: ; 0x26f9b
-	; It's the TOWN MAP.
-	text_jump UnknownText_0x1bc55d
-	db "@"
+	farjumptext UnknownText_0x1bc55d
 ; 0x26fa0
 
 DecorationDesc_PikachuPoster: ; 0x26fa0

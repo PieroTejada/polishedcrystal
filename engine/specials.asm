@@ -55,8 +55,6 @@ SpecialsPointers:: ; c029
 	add_special SpecialNameRival
 	add_special SpecialTrendyPhrase
 	add_special Special_SetDayOfWeek
-	add_special Special_TownMap
-	add_special MapRadio
 	add_special Special_UnownPuzzle
 	add_special Special_SlotMachine
 	add_special Special_CardFlip
@@ -294,12 +292,6 @@ SpecialNameRater: ; c2b9
 	farjp NameRater
 ; c2c0
 
-Special_TownMap: ; c2c0
-	call FadeToMenu
-	farcall _TownMap
-	jp ExitAllMenus
-; c2cd
-
 Special_DisplayLinkRecord: ; c2da
 	call FadeToMenu
 	farcall DisplayLinkRecord
@@ -345,12 +337,6 @@ BugContestJudging: ; c34a
 	ld [wBugContestOfficerPrize], a
 	ret
 ; c355
-
-MapRadio: ; c355
-	ld a, [ScriptVar]
-	ld e, a
-	farjp PlayRadio
-; c360
 
 Special_UnownPuzzle: ; c360
 	call FadeToMenu
@@ -493,19 +479,7 @@ Special_CheckLuckyNumberShowFlag: ; c434
 
 SpecialSnorlaxAwake: ; 0xc43d
 ; Check if the Poké Flute channel is playing.
-
-; outputs:
-; ScriptVar is 1 if the conditions are met, otherwise 0.
-
-; check background music
-	ld a, [wMapMusic]
-	cp MUSIC_POKE_FLUTE_CHANNEL
-	jr nz, .nope
-	ld a, TRUE
-	jr .done
-.nope
 	xor a
-.done
 	ld [ScriptVar], a
 	ret
 

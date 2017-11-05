@@ -95,9 +95,6 @@ RandomEncounter:: ; 97cc0
 	jr c, .nope
 	call CanUseSweetScent
 	jr nc, .nope
-	ld hl, StatusFlags2
-	bit 2, [hl] ; ENGINE_BUG_CONTEST_TIMER
-	jr nz, .bug_contest
 	farcall TryWildEncounter
 	jr nz, .nope
 .ok
@@ -107,13 +104,6 @@ RandomEncounter:: ; 97cc0
 	call CallScript
 	scf
 	ret
-
-.bug_contest
-	call _TryWildEncounter_BugContest
-	jr nc, .nope
-	ld a, BANK(BugCatchingContestBattleScript)
-	ld hl, BugCatchingContestBattleScript
-	jr .done
 
 .nope
 	ld a, 1

@@ -1869,7 +1869,7 @@ BikeFunction: ; d0b3
 	ret
 
 GetBikeMusic::
-	ld de, MUSIC_BICYCLE
+	ld de, MUSIC_NONE
 	ret
 
 Script_GetOnBike: ; 0xd13e

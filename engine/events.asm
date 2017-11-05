@@ -408,8 +408,6 @@ CheckTimeEvents: ; 9693a
 	bit 2, [hl] ; ENGINE_BUG_CONTEST_TIMER
 	jr z, .do_daily
 
-	farcall CheckBugContestTimer
-	jr c, .end_bug_contest
 	xor a
 	ret
 
@@ -421,13 +419,6 @@ CheckTimeEvents: ; 9693a
 
 .nothing
 	xor a
-	ret
-
-.end_bug_contest
-	ld a, BANK(BugCatchingContestOverScript)
-	ld hl, BugCatchingContestOverScript
-	call CallScript
-	scf
 	ret
 ; 96970
 

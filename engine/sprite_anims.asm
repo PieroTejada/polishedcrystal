@@ -366,7 +366,7 @@ DoAnimFrame: ; 8d24b
 	jp DeinitializeSprite
 
 .RadioTuningKnob: ; 8d578 (23:5578)
-	farjp AnimateTuningKnob
+	ret
 
 .CutGrassLeaves ; 8d57f (23:557f)
 	ld hl, SPRITEANIMSTRUCT_0D

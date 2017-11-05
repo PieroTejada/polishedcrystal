@@ -533,8 +533,6 @@ OaksPkmnTalk14:
 	ld hl, wRadioTextDelay
 	dec [hl]
 	ret nz
-	ld de, MUSIC_POKEMON_TALK
-	farcall RadioMusicRestartDE
 	ld hl, .terminator
 	call PrintText
 	ld a, OAKS_POKEMON_TALK_4
@@ -806,14 +804,7 @@ BenFernMusic7:
 
 StartPokemonMusicChannel:
 	call RadioTerminator
-	call PrintText
-	ld de, MUSIC_POKEMON_MARCH
-	call GetWeekday
-	and 1
-	jr z, .SunTueThurSun
-	ld de, MUSIC_POKEMON_LULLABY
-.SunTueThurSun:
-	farjp RadioMusicRestartDE
+	jp PrintText
 
 BenIntroText1:
 	; BEN: #MON MUSIC
@@ -1809,30 +1800,7 @@ StartRadioStation:
 	and a
 	ret nz
 	call RadioTerminator
-	call PrintText
-	ld hl, RadioChannelSongs
-	ld a, [wCurrentRadioLine]
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	ld e, [hl]
-	inc hl
-	ld d, [hl]
-	farjp RadioMusicRestartDE
-
-RadioChannelSongs:
-	dw MUSIC_POKEMON_TALK
-	dw MUSIC_POKEMON_CENTER
-	dw MUSIC_TITLE
-	dw MUSIC_GAME_CORNER
-	dw MUSIC_BUENAS_PASSWORD
-	dw MUSIC_VIRIDIAN_CITY
-	dw MUSIC_BICYCLE
-	dw MUSIC_ROCKET_OVERTURE
-	dw MUSIC_POKE_FLUTE_CHANNEL
-	dw MUSIC_RUINS_OF_ALPH_RADIO
-	dw MUSIC_LAKE_OF_RAGE_ROCKET_RADIO
+	jp PrintText
 
 NextRadioLine:
 	push af

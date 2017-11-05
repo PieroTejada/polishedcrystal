@@ -957,8 +957,6 @@ IntroScene13: ; e4d6d (39:4d6d)
 	depixel 13, 11, 4, 0
 	ld a, SPRITE_ANIM_INDEX_INTRO_SUICUNE
 	call _InitSpriteAnimStruct
-	ld de, MUSIC_CRYSTAL_OPENING
-	call PlayMusic
 	xor a
 	ld [wGlobalAnimXOffset], a
 	call Intro_SetCGBPalUpdate

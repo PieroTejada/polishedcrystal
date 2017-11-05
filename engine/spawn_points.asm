@@ -7,9 +7,9 @@ spawn: MACRO
 	db \2, \3
 ENDM
 
-	spawn KRISS_HOUSE_2F,              3,  3
-	spawn NEW_BARK_TOWN,              15,  6
-	spawn N_A,                        -1, -1
+	spawn KRISS_HOUSE_2F, 2,  2
+	spawn NEW_BARK_TOWN, 11, 4
+	spawn N_A, -1, -1
 
 
 

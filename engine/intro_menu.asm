@@ -628,7 +628,7 @@ ProfElmSpeech: ; 0x5f99
 	call RotateFourPalettesLeft
 	call ClearTileMap
 
-	ld de, MUSIC_ROUTE_30
+	ld de, MUSIC_NEW_BARK_TOWN
 	call PlayMusic
 
 	call RotateFourPalettesRight
@@ -1141,14 +1141,6 @@ TitleScreenEntrance: ; 62bc
 
 ; Play the title screen music.
 	ld de, MUSIC_TITLE
-	ld a, [wSaveFileExists]
-	and a
-	jr z, .ok
-	ld hl, StatusFlags
-	bit 6, [hl] ; hall of fame
-	jr z, .ok
-	ld de, MUSIC_TITLE_XY
-.ok
 	call PlayMusic
 
 	ld a, $88
@@ -1173,14 +1165,6 @@ TitleScreenTimer: ; 62f6
 
 ; Start a timer
 	ld de, 73 * 60 + 36
-	ld a, [wSaveFileExists]
-	and a
-	jr z, .ok
-	ld hl, StatusFlags
-	bit 6, [hl] ; hall of fame
-	jr z, .ok
-	ld de, 56 * 60
-.ok
 	ld hl, wcf65
 	ld [hl], e
 	inc hl

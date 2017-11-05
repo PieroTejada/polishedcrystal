@@ -743,8 +743,6 @@ EggHatch_AnimationSequence: ; 1728f (5:728f)
 	ld de, VTiles2 tile $31
 	ld a, EGG
 	call GetEggFrontpic
-	ld de, MUSIC_EVOLUTION
-	call PlayMusic
 	call EnableLCD
 	hlcoord 7, 4
 	lb bc, VBGMap0 / $100, $31 ; Egg tiles start at c

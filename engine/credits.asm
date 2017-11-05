@@ -459,13 +459,6 @@ endr
 
 .music
 ; Play the credits music.
-	ld de, MUSIC_CREDITS
-	push de
-	ld de, MUSIC_NONE
-	call PlayMusic
-	call DelayFrame
-	pop de
-	call PlayMusic
 	jp .loop
 
 .wait2
@@ -493,10 +486,6 @@ endr
 	set 7, [hl]
 	ld a, 32
 	ld [MusicFade], a
-	ld a, MUSIC_POST_CREDITS % $100
-	ld [MusicFadeID], a
-	ld a, MUSIC_POST_CREDITS / $100
-	ld [MusicFadeIDHi], a
 	ret
 
 .get

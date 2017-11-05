@@ -24,16 +24,11 @@ Script_Whiteout: ; 0x124ce
 	special FadeOutPalettes
 	pause 40
 	special HealPartyEvenForNuzlocke
-	checkflag ENGINE_BUG_CONTEST_TIMER
-	iftrue .bug_contest
 	callasm GetWhiteoutSpawn
 	farscall Script_AbortBugContest
 	special WarpToSpawnPoint
 	newloadmap MAPSETUP_WARP
 	end_all
-
-.bug_contest
-	jumpstd bugcontestresultswarp
 ; 0x124f5
 
 .WhitedOutText: ; 0x124f5
