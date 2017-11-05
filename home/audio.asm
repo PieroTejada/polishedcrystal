@@ -446,69 +446,11 @@ RestartMapMusic:: ; 3d47
 ; 3d62
 
 SpecialMapMusic:: ; 3d62
-	ld a, [MapGroup]
-	cp GROUP_ROUTE_23
-	jr nz, .not_route_23
-	ld a, [MapNumber]
-	cp MAP_ROUTE_23
-	jr z, .no
-
-.not_route_23
-	ld a, [MapGroup]
-	cp GROUP_QUIET_CAVE_1F ; GROUP_QUIET_CAVE_B1F, GROUP_QUIET_CAVE_B2F, GROUP_QUIET_CAVE_B3F
-	jr nz, .not_quiet_cave
-	ld a, [MapNumber]
-	cp MAP_QUIET_CAVE_1F
-	jr z, .no
-	cp MAP_QUIET_CAVE_B1F
-	jr z, .no
-	cp MAP_QUIET_CAVE_B2F
-	jr z, .no
-	cp MAP_QUIET_CAVE_B3F
-	jr z, .no
-
-.not_quiet_cave
-	ld a, [MapGroup]
-	cp GROUP_SCARY_CAVE_SHIPWRECK
-	jr nz, .not_shipwreck
-	ld a, [MapNumber]
-	cp MAP_SCARY_CAVE_SHIPWRECK
-	jr z, .no
-
-.not_shipwreck
-	ld a, [MapGroup]
-	cp GROUP_WHIRL_ISLAND_LUGIA_CHAMBER
-	jr nz, .not_lugia_chamber
-	ld a, [MapNumber]
-	cp MAP_WHIRL_ISLAND_LUGIA_CHAMBER
-	jr z, .no
-
-.not_lugia_chamber
-	ld a, [MapGroup]
-	cp GROUP_ROUTE_16_SOUTH ; GROUP_ROUTE_18_WEST
-	jr nz, .not_cycling_road_bike
-	ld a, [MapNumber]
-	cp MAP_ROUTE_16_SOUTH
-	jr z, .route_16
-	cp MAP_ROUTE_18_WEST
-	jr nz, .not_cycling_road_bike
-.route_16
-	ld a, [PlayerState]
-	cp PLAYER_BIKE
-	jr z, .cycling_road_bike
-
-.not_cycling_road_bike
 	ld a, [PlayerState]
 	cp PLAYER_SURF
 	jr z, .surf
 	cp PLAYER_SURF_PIKA
 	jr z, .surf_pikachu
-
-	ld a, [StatusFlags2]
-	bit 2, a ; ENGINE_BUG_CONTEST_TIMER
-	jr nz, .contest
-
-.no
 	and a
 	ret
 
@@ -529,21 +471,6 @@ SpecialMapMusic:: ; 3d62
 
 .surf_pikachu
 	ld de, MUSIC_SURFING_PIKACHU
-	scf
-	ret
-
-.contest
-	ld a, [MapGroup]
-	cp GROUP_ROUTE_35_NATIONAL_PARK_GATE
-	jr nz, .no
-	ld a, [MapNumber]
-	cp MAP_ROUTE_35_NATIONAL_PARK_GATE
-	jr z, .ranking
-	cp MAP_ROUTE_36_NATIONAL_PARK_GATE
-	jr nz, .no
-
-.ranking
-	ld de, MUSIC_BUG_CATCHING_CONTEST_RANKING
 	scf
 	ret
 ; 3d97

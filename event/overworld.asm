@@ -713,31 +713,6 @@ CheckFlyAllowedOnMap:
 ; returns z is fly is allowed
 	call GetMapPermission
 	call CheckOutdoorMap
-	ret z
-; assumes all special roof maps are in different groups
-	ld a, [MapGroup]
-	cp GROUP_GOLDENROD_DEPT_STORE_ROOF
-	jr z, .goldenrod_dept_store_roof_group
-	cp GROUP_CELADON_MANSION_ROOF
-	jr z, .celadon_mansion_roof_group
-	cp GROUP_TIN_TOWER_ROOF
-	jr z, .tin_tower_roof_group
-	cp GROUP_OLIVINE_LIGHTHOUSE_ROOF
-	ret nz
-	ld a, [MapNumber]
-	cp MAP_OLIVINE_LIGHTHOUSE_ROOF
-	ret
-.goldenrod_dept_store_roof_group
-	ld a, [MapNumber]
-	cp MAP_GOLDENROD_DEPT_STORE_ROOF
-	ret
-.celadon_mansion_roof_group
-	ld a, [MapNumber]
-	cp MAP_CELADON_MANSION_ROOF
-	ret
-.tin_tower_roof_group
-	ld a, [MapNumber]
-	cp MAP_TIN_TOWER_ROOF
 	ret
 
 FlyFunction: ; ca3b
@@ -762,17 +737,6 @@ FlyFunction: ; ca3b
 	jr c, .nostormbadge
 	call CheckFlyAllowedOnMap
 	jr nz, .indoors
-
-	ld a, [MapGroup]
-	cp GROUP_SHAMOUTI_ISLAND
-	jr z, .indoors
-	cp GROUP_VALENCIA_ISLAND
-	jr z, .indoors
-	cp GROUP_SHAMOUTI_SHRINE_RUINS
-	jr nz, .outdoors
-	ld a, [MapNumber]
-	cp MAP_SHAMOUTI_SHRINE_RUINS
-	jr z, .indoors
 
 .outdoors
 	xor a
@@ -2000,29 +1964,6 @@ BikeFunction: ; d0b3
 	ret
 
 GetBikeMusic::
-	ld de, MUSIC_BICYCLE_XY
-	ld a, [MapGroup]
-	cp GROUP_ROUTE_17 ; GROUP_ROUTE_18_WEST
-	jr nz, .not_cycling_road
-	ld a, [MapNumber]
-	cp MAP_ROUTE_17
-	ret z
-	cp MAP_ROUTE_18_WEST
-	ret z
-	ld a, [MapGroup]
-.not_cycling_road
-	ld de, MUSIC_NONE
-	cp GROUP_QUIET_CAVE_1F ; GROUP_QUIET_CAVE_B1F, GROUP_QUIET_CAVE_B2F, GROUP_QUIET_CAVE_B3F
-	jr nz, .not_quiet_cave
-	cp MAP_QUIET_CAVE_1F
-	ret z
-	cp MAP_QUIET_CAVE_B1F
-	ret z
-	cp MAP_QUIET_CAVE_B2F
-	ret z
-	cp MAP_QUIET_CAVE_B3F
-	ret z
-.not_quiet_cave
 	ld de, MUSIC_BICYCLE
 	ret
 

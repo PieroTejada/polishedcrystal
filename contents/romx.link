@@ -90,8 +90,6 @@ ROMX $21
 ROMX $22
 	org $4000
 	"bank22"
-	"Special Map Blockdata"
-	"Pokemon Center Scripts 4"
 
 ROMX $23
 	org $4000
@@ -100,7 +98,6 @@ ROMX $23
 ROMX $24
 	org $4000
 	"bank24"
-	"Special Map Scripts"
 
 ROMX $25
 	org $4000
@@ -114,10 +111,6 @@ ROMX $28
 ROMX $29
 	org $4000
 	"Pic Animations 4"
-
-ROMX $2B
-	org $4000
-	"New Bark Scripts"
 
 ROMX $2E
 	org $4000
@@ -193,14 +186,6 @@ ROMX $48
 	org $4000
 	"Pic Pointers"
 
-ROMX $58
-	org $4000
-	"Battle Tower Scripts"
-
-ROMX $5A
-	org $4000
-	"Pokemon Center Scripts 1"
-
 ROMX $5D
 	org $4000
 	"bank5D"
@@ -209,10 +194,6 @@ ROMX $5E
 	org $4000
 	"bank5E"
 	"Crystal Sound Effects"
-
-ROMX $5F
-	org $4000
-	"Pokemon Center Scripts 2"
 
 ROMX $6D
 	org $4000
@@ -238,14 +219,9 @@ ROMX $73
 	org $4000
 	"Enemy Trainers"
 
-ROMX $76
-	org $4000
-	"Pokemon Center Scripts 3"
-
 ROMX $77
 	org $4000
 	"bank77"
-	"New Bark Scripts 2"
 
 ROMX $78
 	org $4000

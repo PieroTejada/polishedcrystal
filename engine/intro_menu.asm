@@ -403,32 +403,10 @@ Continue: ; 5d65
 	call DelayFrames
 	farcall JumpRoamMons
 	farcall Function140ae ; time-related
-	ld a, [wSpawnAfterChampion]
-	cp SPAWN_LANCE
-	jr z, .SpawnAfterE4
 	ld a, MAPSETUP_CONTINUE
 	ld [hMapEntryMethod], a
 	jp FinishContinueFunction
-
-.SpawnAfterE4:
-	ld a, SPAWN_NEW_BARK
-	ld [DefaultSpawnpoint], a
-	call PostCreditsSpawn
-	jp FinishContinueFunction
 ; 5de2
-
-SpawnAfterLeaf: ; 5de2
-	ld a, SPAWN_HOME
-	ld [DefaultSpawnpoint], a
-; 5de7
-
-PostCreditsSpawn: ; 5de7
-	xor a
-	ld [wSpawnAfterChampion], a
-	ld a, MAPSETUP_WARP
-	ld [hMapEntryMethod], a
-	ret
-; 5df0
 
 ConfirmContinue: ; 5e34
 .loop
@@ -479,14 +457,7 @@ FinishContinueFunction: ; 5e5d
 	ld hl, wEnteredMapFromContinue
 	set 1, [hl]
 	farcall OverworldLoop
-	ld a, [wSpawnAfterChampion]
-	cp SPAWN_LEAF
-	jr z, .AfterLeaf
 	jp SoftReset
-
-.AfterLeaf:
-	call SpawnAfterLeaf
-	jr .loop
 ; 5e85
 
 DisplaySaveInfoOnContinue: ; 5e85

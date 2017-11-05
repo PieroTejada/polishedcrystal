@@ -5,10 +5,6 @@ HallOfFame:: ; 0x8640e
 	ld a, 1
 	ld [wGameLogicPaused], a
 	call DisableSpriteUpdates
-	ld a, SPAWN_LANCE
-	ld [wSpawnAfterChampion], a
-	ld b, a
-	farcall SetCreditsSpawn
 
 	; Enable the Pokégear map to cycle through all of Kanto
 	ld hl, StatusFlags
@@ -25,7 +21,6 @@ HallOfFame:: ; 0x8640e
 	farcall SaveGameData
 	call GetHallOfFameParty
 	farcall AddHallOfFameEntry
-
 	xor a
 	ld [wGameLogicPaused], a
 	call AnimateHallOfFame
@@ -49,10 +44,6 @@ LeafCredits:: ; 86455
 	ld c, 8
 	call DelayFrames
 	call DisableSpriteUpdates
-	ld a, SPAWN_LEAF
-	ld [wSpawnAfterChampion], a
-	ld b, a
-	farcall SetCreditsSpawn
 	ld a, [StatusFlags]
 	ld b, a
 	farjp Credits

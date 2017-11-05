@@ -33,11 +33,6 @@ UnknownScript_0xbcedf: ; 0xbcedf
 
 UnknownScript_0xbcee7: ; 0xbcee7
 	checkcode VAR_MAPGROUP
-	if_equal GROUP_NEW_BARK_TOWN, .newbark
-	if_equal GROUP_CHERRYGROVE_CITY, .cherrygrove
-	if_equal GROUP_VIOLET_CITY, .violet
-	if_equal GROUP_AZALEA_TOWN, .azalea
-	if_equal GROUP_GOLDENROD_CITY, .goldenrod
 	farwritetext MomPhoneGenericAreaText
 	buttonsound
 	jump UnknownScript_0xbcf37
@@ -1085,7 +1080,7 @@ UnknownScript_0xbd6a6:
 	iftrue UnknownScript_0xbd6bd
 	setflag ENGINE_DUNSPARCE_SWARM
 	pokenamemem DUNSPARCE, $1
-	swarm SWARM_DUNSPARCE, DARK_CAVE_VIOLET_ENTRANCE
+	;swarm SWARM_DUNSPARCE, DARK_CAVE_VIOLET_ENTRANCE
 	landmarktotext DARK_CAVE, $2
 	farjump UnknownScript_0xa05de
 
@@ -1308,7 +1303,7 @@ UnknownScript_0xbd887: ; start swarm
 	iftrue UnknownScript_0xbd8a2
 	setflag ENGINE_YANMA_SWARM
 	pokenamemem YANMA, $1
-	swarm SWARM_YANMA, ROUTE_35
+	;swarm SWARM_YANMA, ROUTE_35
 	landmarktotext ROUTE_35, $2
 	farjump UnknownScript_0xa05ce
 

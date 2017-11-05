@@ -350,7 +350,6 @@ RadioTowerRocketsScript:
 	clearevent EVENT_USED_THE_CARD_KEY_IN_THE_RADIO_TOWER
 	setevent EVENT_MAHOGANY_TOWN_POKEFAN_M_BLOCKS_EAST
 	specialphonecall SPECIALCALL_WEIRDBROADCAST
-	domaptrigger MAHOGANY_TOWN, $1
 	end
 
 BugContestResultsWarpScript:
@@ -359,7 +358,6 @@ BugContestResultsWarpScript:
 	setevent EVENT_ROUTE_36_NATIONAL_PARK_GATE_OFFICER_CONTEST_DAY
 	clearevent EVENT_ROUTE_36_NATIONAL_PARK_GATE_OFFICER_NOT_CONTEST_DAY
 	setevent EVENT_WARPED_FROM_ROUTE_35_NATIONAL_PARK_GATE
-	warp ROUTE_36_NATIONAL_PARK_GATE, $0, $4
 	applymovement PLAYER, Movement_ContestResults_WalkAfterWarp
 	; fallthrough
 
@@ -423,7 +421,6 @@ BugContestResultsScript:
 .CleanUp
 	closetext
 	dotrigger $0
-	domaptrigger ROUTE_35_NATIONAL_PARK_GATE, $0
 	setevent EVENT_BUG_CATCHING_CONTESTANT_1A
 	setevent EVENT_BUG_CATCHING_CONTESTANT_2A
 	setevent EVENT_BUG_CATCHING_CONTESTANT_3A
@@ -1942,16 +1939,6 @@ VendingMachineScript:
 	db "Cancel@"
 
 TreeGrottoScript:
-	scall _HiddenGrottoInitScript
-	iffalse_endtext
-	closetext
-	playsound SFX_EXIT_BUILDING
-	special FadeOutPalettes
-	pause 15
-	callasm _HiddenGrottoBackupMap
-	warpfacing UP, HIDDEN_TREE_GROTTO, 4, 15
-	end
-
 CaveGrottoScript:
 	scall _HiddenGrottoInitScript
 	iffalse_endtext
@@ -1960,7 +1947,7 @@ CaveGrottoScript:
 	special FadeOutPalettes
 	pause 15
 	callasm _HiddenGrottoBackupMap
-	warpfacing UP, HIDDEN_CAVE_GROTTO, 35, 85
+	warpfacing UP, HIDDEN_TREE_GROTTO, 4, 15
 	end
 
 _HiddenGrottoInitScript:

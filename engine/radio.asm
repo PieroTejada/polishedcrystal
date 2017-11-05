@@ -183,110 +183,9 @@ OaksPkmnTalk3:
 	jp NextRadioLine
 
 OaksPkmnTalk4:
-; Choose a random route, and a random Pokemon from that route.
-	call Random
-	and $1f
-	cp $f
-	jr nc, OaksPkmnTalk4
-	; We now have a number between 0 and 14.
-	ld hl, .routes
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	ld b, [hl]
-	inc hl
-	ld c, [hl]
-	; bc now contains the chosen map's group and number indices.
-	push bc
-
-	; Search the JohtoGrassWildMons array for the chosen map.
-	ld hl, JohtoGrassWildMons
-.loop
-	ld a, BANK(JohtoGrassWildMons)
-	call GetFarByte
-	cp -1
-	jr z, .overflow
-	inc hl
-	cp b
-	jr nz, .next
-	ld a, BANK(JohtoGrassWildMons)
-	call GetFarByte
-	cp c
-	jr z, .done
-.next
-	dec hl
-	ld de, WILDMON_GRASS_STRUCTURE_LENGTH
-	add hl, de
-	jr .loop
-
-.done
-rept 4
-	inc hl
-endr
-	; Generate a number, either 0, 1, or 2, to choose a time of day.
-.loop2
-	call Random
-	and 3
-	cp 3
-	jr z, .loop2
-
-	ld bc, 2 * NUM_WILDMONS_PER_AREA_TIME_OF_DAY
-	call AddNTimes
-.loop3
-	; Choose one of the middle three Pokemon.
-	call Random
-	and NUM_WILDMONS_PER_AREA_TIME_OF_DAY
-	cp 2
-	jr c, .loop3
-	cp 5
-	jr nc, .loop3
-	ld e, a
-	ld d, 0
-	add hl, de
-	add hl, de
-	inc hl ; skip level
-	ld a, BANK(JohtoGrassWildMons)
-	call GetFarByte
-	ld [wNamedObjectIndexBuffer], a
-	ld [CurPartySpecies], a
-	call GetPokemonName
-	ld hl, StringBuffer1
-	ld de, wMonOrItemNameBuffer
-	ld bc, PKMN_NAME_LENGTH
-	call CopyBytes
-	; Now that we've chosen our wild Pokemon,
-	; let's recover the map index info and get its name.
-	pop bc
-	call GetWorldMapLocation
-	ld e, a
-	farcall GetLandmarkName
 	ld hl, OPT_OakText1
-	call CopyRadioTextToRAM
-	ld a, OAKS_POKEMON_TALK_5
-	jp PrintRadioLine
-
-.overflow
-	pop bc
 	ld a, OAKS_POKEMON_TALK
 	jp PrintRadioLine
-
-.routes
-	map ROUTE_29
-	map ROUTE_46
-	map ROUTE_30
-	map ROUTE_32
-	map ROUTE_34
-	map ROUTE_35
-	map ROUTE_37
-	map ROUTE_38
-	map ROUTE_39
-	map ROUTE_42
-	map ROUTE_43
-	map ROUTE_44
-	map ROUTE_45
-	map ROUTE_36
-	map ROUTE_31
 
 OaksPkmnTalk5:
 	ld hl, OPT_OakText2
@@ -1325,33 +1224,12 @@ PnP_odd:
 	db "@"
 
 PeoplePlaces6: ; Places
-	call Random
-	cp 9
-	jr nc, PeoplePlaces6
-	ld hl, .Maps
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	ld b, [hl]
-	inc hl
-	ld c, [hl]
-	call GetWorldMapLocation
+	ld a, NEW_BARK_TOWN
 	ld e, a
 	farcall GetLandmarkName
 	ld hl, PnP_Text5
 	ld a, PLACES_AND_PEOPLE_7
 	jp NextRadioLine
-
-.Maps:
-	map PALLET_TOWN
-	map ROUTE_22
-	map PEWTER_CITY
-	map CERULEAN_CITY
-	map ROUTE_12_NORTH
-	map ROUTE_11
-	map ROUTE_16_WEST
-	map ROUTE_14
 
 PnP_Text5:
 	; @ @

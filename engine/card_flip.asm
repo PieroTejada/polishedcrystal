@@ -49,17 +49,6 @@ _CardFlip: ; e00ee (38:40ee)
 	ld [wCardFlipCursorY], a
 	ld [wCardFlipCursorX], a
 
-;	ld de, MUSIC_GAME_CORNER
-;	ld a, [MapGroup]
-;	cp GROUP_GOLDENROD_GAME_CORNER
-;	jr nz, .celadon_game_corner
-;	ld a, [MapNumber]
-;	cp MAP_GOLDENROD_GAME_CORNER
-;	jr nz, .celadon_game_corner
-;	ld de, MUSIC_GAME_CORNER_DPPT
-;.celadon_game_corner
-;	call PlayMusic
-
 .MasterLoop:
 	ld a, [wJumptableIndex]
 	bit 7, a

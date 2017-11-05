@@ -118,12 +118,6 @@ const_value SET -7
 	const CREDITS_END
 
 
-SetCreditsSpawn::
-	ld a, b
-	ld [wCreditsSpawn], a
-	ret
-
-
 Credits:: ; 109847
 	xor a
 	bit 6, b ; Hall Of Fame
@@ -449,17 +443,8 @@ endr
 .scene
 ; Update the scene number and corresponding palette.
 
-	ld a, [wCreditsSpawn]
-	cp SPAWN_LEAF
-	jr z, .leaf_scene
 	call .get
 	ld [wCreditsBorderMon], a ; scene
-	jr .got_scene
-.leaf_scene
-	call .get
-	add 4
-	ld [wCreditsBorderMon], a ; scene
-.got_scene
 	xor a
 	ld [wCreditsBorderFrame], a ; frame
 	call GetCreditsPalette

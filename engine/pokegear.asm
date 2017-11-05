@@ -2281,34 +2281,8 @@ flypoint: MACRO
 ENDM
 ; Johto
 	flypoint NEW_BARK,    NEW_BARK_TOWN
-	flypoint CHERRYGROVE, CHERRYGROVE_CITY
-	flypoint VIOLET,      VIOLET_CITY
-	flypoint UNION_CAVE,  UNION_CAVE
-	flypoint AZALEA,      AZALEA_TOWN
-	flypoint GOLDENROD,   GOLDENROD_CITY
-	flypoint ECRUTEAK,    ECRUTEAK_CITY
-	flypoint OLIVINE,     OLIVINE_CITY
-	flypoint CIANWOOD,    CIANWOOD_CITY
-	flypoint MAHOGANY,    MAHOGANY_TOWN
-	flypoint LAKE,        LAKE_OF_RAGE
-	flypoint BLACKTHORN,  BLACKTHORN_CITY
-	flypoint MT_SILVER,   SILVER_CAVE
-; Kanto
 
 KANTO_FLYPOINT EQU const_value
-	flypoint PALLET,      PALLET_TOWN
-	flypoint VIRIDIAN,    VIRIDIAN_CITY
-	flypoint PEWTER,      PEWTER_CITY
-	flypoint MT_MOON,     MT_MOON
-	flypoint CERULEAN,    CERULEAN_CITY
-	flypoint VERMILION,   VERMILION_CITY
-	flypoint ROCK_TUNNEL, ROCK_TUNNEL
-	flypoint LAVENDER,    LAVENDER_TOWN
-	flypoint CELADON,     CELADON_CITY
-	flypoint SAFFRON,     SAFFRON_CITY
-	flypoint FUCHSIA,     FUCHSIA_CITY
-	flypoint CINNABAR,    CINNABAR_ISLAND
-	flypoint INDIGO,      INDIGO_PLATEAU
 	db -1
 
 ; 91c90
@@ -2327,7 +2301,7 @@ FlyMap: ; 91c90
 ; Flypoints begin at New Bark Town...
 	ld [StartFlypoint], a
 ; ..and end at Silver Cave
-	ld a, FLY_MT_SILVER
+	ld a, FLY_NEW_BARK
 	ld [EndFlypoint], a
 ; Fill out the map
 	call FillJohtoMap
@@ -2352,17 +2326,13 @@ FlyMap: ; 91c90
 
 ; visited and its flypoint enabled
 	push af
-	ld c, SPAWN_INDIGO
-	call HasVisitedSpawn
-	and a
-	jr z, .NoKanto
 ; Kanto's map is only loaded if we've visited Indigo Plateau
 
 ; Flypoints begin at Pallet Town...
-	ld a, FLY_PALLET
+	ld a, FLY_NEW_BARK
 	ld [StartFlypoint], a
 ; ...and end at Indigo Plateau
-	ld a, FLY_INDIGO
+	ld a, FLY_NEW_BARK
 	ld [EndFlypoint], a
 ; Because Indigo Plateau is the first flypoint the player
 
@@ -2386,7 +2356,7 @@ FlyMap: ; 91c90
 ; Flypoints begin at New Bark Town...
 	ld [StartFlypoint], a
 ; ..and end at Silver Cave
-	ld a, FLY_MT_SILVER
+	ld a, FLY_NEW_BARK
 	ld [EndFlypoint], a
 	call FillJohtoMap
 	pop af

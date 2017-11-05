@@ -6589,12 +6589,12 @@ endr
 	; We're clear if the length is < 1536
 	ld a, [MagikarpLength]
 	cp $06 ; $600 = 1536
-	jr nz, .CheckMagikarpArea
+	jr nz, .Happiness
 
 	; 5% chance of skipping size checks
 	call Random
 	cp $0c ; / $100
-	jr c, .CheckMagikarpArea
+	jr c, .Happiness
 	; Try again if > 1614
 	ld a, [MagikarpLength + 1]
 	cp $50
@@ -6603,31 +6603,11 @@ endr
 	; 20% chance of skipping this check
 	call Random
 	cp $32 ; / $100
-	jr c, .CheckMagikarpArea
+	jr c, .Happiness
 	; Try again if > 1598
 	ld a, [MagikarpLength + 1]
 	cp $40
 	jp nc, .GenerateDVs
-
-.CheckMagikarpArea:
-	ld a, [MapGroup]
-	cp GROUP_LAKE_OF_RAGE
-	jr nz, .Happiness
-	ld a, [MapNumber]
-	cp MAP_LAKE_OF_RAGE
-	jr nz, .Happiness
-.LakeOfRageMagikarp
-	; 40% chance of not flooring
-	call Random
-	cp $64 ; / $100
-	jr c, .Happiness
-	; Floor at length 1024
-	ld a, [MagikarpLength]
-	cp 1024 >> 8
-	jp c, .GenerateDVs ; try again
-
-
-	; Finally done with DVs
 
 .Happiness:
 	; Set happiness

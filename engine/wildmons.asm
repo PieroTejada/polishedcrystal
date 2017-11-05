@@ -67,22 +67,9 @@ FindNest: ; 2a01f
 	cp -1
 	ret z
 	push hl
-
-	; assume that navel rock is the first off-screen map, and end the search early
 	ld a, [hli]
-	cp GROUP_NAVEL_ROCK_INSIDE
-	jr nz, .not_navel_rock_group
 	ld b, a
 	ld a, [hli]
-	cp MAP_NAVEL_ROCK_INSIDE
-	jr nz, .not_navel_rock_map
-	ret
-
-	ld a, [hli]
-.not_navel_rock_group
-	ld b, a
-	ld a, [hli]
-.not_navel_rock_map
 	ld c, a
 rept 3
 	inc hl
@@ -476,22 +463,6 @@ endr
 .loadwildmon
 	ld a, b
 	ld [TempWildMonSpecies], a
-
-	ld a, [MapGroup]
-	cp GROUP_SOUL_HOUSE_B1F ; Soul House or Lavender Radio Tower
-	jr nz, .not_ghost
-	ld a, [MapNumber]
-	cp MAP_SOUL_HOUSE_B1F ; first Ghost map in its group
-	jr c, .not_ghost
-	ld a, SILPHSCOPE2
-	ld [CurItem], a
-	ld hl, NumKeyItems
-	call CheckItem
-	jr c, .not_ghost
-	ld a, BATTLETYPE_GHOST
-	ld [BattleType], a
-.not_ghost
-
 .startwildbattle
 	xor a
 	ret
@@ -739,45 +710,6 @@ LookUpWildmonsForMapDE: ; 2a288
 
 InitRoamMons: ; 2a2a0
 ; initialize wRoamMon structs
-
-; species
-	ld a, RAIKOU
-	ld [wRoamMon1Species], a
-	ld a, ENTEI
-	ld [wRoamMon2Species], a
-;	ld a, SUICUNE
-;	ld [wRoamMon3Species], a
-
-; level
-	ld a, 40
-	ld [wRoamMon1Level], a
-	ld [wRoamMon2Level], a
-;	ld [wRoamMon3Level], a
-
-; raikou starting map
-	ld a, GROUP_ROUTE_42
-	ld [wRoamMon1MapGroup], a
-	ld a, MAP_ROUTE_42
-	ld [wRoamMon1MapNumber], a
-
-; entei starting map
-	ld a, GROUP_ROUTE_37
-	ld [wRoamMon2MapGroup], a
-	ld a, MAP_ROUTE_37
-	ld [wRoamMon2MapNumber], a
-
-; suicune starting map
-;	ld a, GROUP_ROUTE_38
-;	ld [wRoamMon3MapGroup], a
-;	ld a, MAP_ROUTE_38
-;	ld [wRoamMon3MapNumber], a
-
-; hp
-	xor a ; generate new stats
-	ld [wRoamMon1HP], a
-	ld [wRoamMon2HP], a
-;	ld [wRoamMon3HP], a
-
 	ret
 ; 2a2ce
 
@@ -934,36 +866,6 @@ endr
 	ret
 
 JumpRoamMons: ; 2a394
-	ld a, [wRoamMon1MapGroup]
-	cp GROUP_N_A
-	jr z, .SkipRaikou
-	call JumpRoamMon
-	ld a, b
-	ld [wRoamMon1MapGroup], a
-	ld a, c
-	ld [wRoamMon1MapNumber], a
-.SkipRaikou:
-
-	ld a, [wRoamMon2MapGroup]
-	cp GROUP_N_A
-	jr z, .SkipEntei
-	call JumpRoamMon
-	ld a, b
-	ld [wRoamMon2MapGroup], a
-	ld a, c
-	ld [wRoamMon2MapNumber], a
-.SkipEntei:
-
-	ld a, [wRoamMon3MapGroup]
-	cp GROUP_N_A
-	jr z, .SkipSuicune
-	call JumpRoamMon
-	ld a, b
-	ld [wRoamMon3MapGroup], a
-	ld a, c
-	ld [wRoamMon3MapNumber], a
-.SkipSuicune:
-
 	jp _BackUpMapIndices
 
 JumpRoamMon: ; 2a3cd
@@ -1016,22 +918,6 @@ RoamMaps: ; 2a40f
 ; and possible maps they can jump to.
 ; Notably missing are Route 40 and
 ; Route 41, which are water routes.
-	roam_map ROUTE_29, 2, ROUTE_30, ROUTE_46
-	roam_map ROUTE_30, 2, ROUTE_29, ROUTE_31
-	roam_map ROUTE_31, 3, ROUTE_30, ROUTE_32, ROUTE_36
-	roam_map ROUTE_32, 3, ROUTE_36, ROUTE_31, ROUTE_33
-	roam_map ROUTE_33, 2, ROUTE_32, ROUTE_34
-	roam_map ROUTE_34, 2, ROUTE_33, ROUTE_35
-	roam_map ROUTE_35, 2, ROUTE_34, ROUTE_36
-	roam_map ROUTE_36, 4, ROUTE_35, ROUTE_31, ROUTE_32, ROUTE_37
-	roam_map ROUTE_37, 3, ROUTE_36, ROUTE_38, ROUTE_42
-	roam_map ROUTE_38, 3, ROUTE_37, ROUTE_39, ROUTE_42
-	roam_map ROUTE_39, 1, ROUTE_38
-	roam_map ROUTE_42, 4, ROUTE_43, ROUTE_44, ROUTE_37, ROUTE_38
-	roam_map ROUTE_43, 2, ROUTE_42, ROUTE_44
-	roam_map ROUTE_44, 3, ROUTE_42, ROUTE_43, ROUTE_45
-	roam_map ROUTE_45, 2, ROUTE_44, ROUTE_46
-	roam_map ROUTE_46, 2, ROUTE_45, ROUTE_29
 	db -1
 ; 2a4a0
 
