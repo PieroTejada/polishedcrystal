@@ -13,10 +13,9 @@ KrissHouse2F_MapEventHeader:
 
 .XYTriggers: db 0
 
-.Signposts: db 4
+.Signposts: db 3
 	signpost 1, 2, SIGNPOST_READ, KrissHousePC
 	signpost 1, 3, SIGNPOST_READ, KrissHouseRadio
-	signpost 1, 5, SIGNPOST_READ, PokemonJournalProfElmScript
 	signpost 0, 6, SIGNPOST_IFSET, KrissHousePoster
 
 .PersonEvents: db 4
@@ -58,6 +57,8 @@ KrissHousePoster:
 KrissHouseRadio:
 	checkevent EVENT_LISTENED_TO_INITIAL_RADIO
 	iftrue .AbbreviatedRadio
+	playmusic MUSIC_POKEMON_TALK
+	opentext
 
 if DEF(DEBUG)
 	; full pokegear
@@ -132,8 +133,6 @@ if DEF(DEBUG)
 	addcellnum PHONE_MOM
 endc
 
-	playmusic MUSIC_POKEMON_TALK
-	opentext
 	writetext KrisRadioText1
 	pause 45
 	writetext KrisRadioText2
@@ -152,10 +151,6 @@ endc
 	writetext KrisRadioText4
 	pause 45
 	endtext
-
-PokemonJournalProfElmScript:
-	setflag ENGINE_READ_PROF_ELM_JOURNAL
-	jumptext PokemonJournalProfElmText
 
 KrissHousePC:
 	opentext
@@ -184,21 +179,6 @@ KrisRadioText3:
 KrisRadioText4:
 	text "#mon!"
 	line "#mon Channel…"
-	done
-
-PokemonJournalProfElmText:
-	text "#mon Journal"
-
-	para "Special Feature:"
-	line "#mon Prof.Elm!"
-
-	para "Prof.Elm was the"
-	line "top student of"
-	cont "Prof.Oak."
-
-	para "They're said to"
-	line "often argue about"
-	cont "research."
 	done
 
 if DEF(DEBUG)

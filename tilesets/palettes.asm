@@ -27,10 +27,14 @@ LoadSpecialMapPalette: ; 494ac
 	jr z, .do_nothing
 .not_dark
 
-	ld a, [wTileset]
-	ld hl, RppPalette
-	cp TILESET_RPP
+	ld hl, ViridianForestPalette
+	ld a, [MapGroup]
+	cp GROUP_VIRIDIAN_FOREST
+	jr nz, .not_viridian_forest
+	ld a, [MapNumber]
+	cp MAP_VIRIDIAN_FOREST
 	jr z, .load_eight_bg_palettes
+.not_viridian_forest
 
 .do_nothing
 	and a
@@ -50,8 +54,8 @@ LoadSpecialMapPalette: ; 494ac
 	scf
 	ret
 
-RppPalette:
-INCLUDE "tilesets/palettes/rpp.pal"
+ViridianForestPalette:
+INCLUDE "tilesets/palettes/viridian_forest.pal"
 
 LinkTrade_Layout_FillBox: ; 49336
 .row
@@ -148,7 +152,7 @@ InitLinkTradePalMap: ; 49856
 
 LoadSpecialMapOBPalette:
 	ld a, [wTileset]
-	cp TILESET_RPP
+	cp TILESET_FOREST
 	jr z, .load_bg_tree_palette
 
 .do_nothing

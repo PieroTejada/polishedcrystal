@@ -1342,17 +1342,6 @@ LoadTileset:: ; 2821
 	pop af
 	ld [rSVBK], a
 
-	ld a, [wTileset]
-	cp TILESET_JOHTO_TRADITIONAL
-	jr z, .load_roof
-	cp TILESET_JOHTO_MODERN
-	jr z, .load_roof
-	jr .skip_roof
-
-.load_roof
-	farcall LoadMapGroupRoof
-
-.skip_roof
 	xor a
 	ld [hTileAnimFrame], a
 	ret

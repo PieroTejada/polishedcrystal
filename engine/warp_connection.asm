@@ -164,7 +164,6 @@ EnteredConnection: ; 1046c4
 
 LoadWarpData: ; 1046c6
 	call .SaveDigWarp
-	call .SetSpawn
 	ld a, [wNextWarp]
 	ld [WarpNumber], a
 	ld a, [wNextMapGroup]
@@ -190,35 +189,6 @@ LoadWarpData: ; 1046c6
 	ld [wDigMapGroup], a
 	ld a, [wPrevMapNumber]
 	ld [wDigMapNumber], a
-	ret
-
-.SetSpawn: ; 104718 (41:4718)
-	call GetMapPermission
-	call CheckOutdoorMap
-	ret nz
-	ld a, [wNextMapGroup]
-	ld b, a
-	ld a, [wNextMapNumber]
-	ld c, a
-	call GetAnyMapPermission
-	call CheckIndoorMap
-	ret nz
-	ld a, [wNextMapGroup]
-	ld b, a
-	ld a, [wNextMapNumber]
-	ld c, a
-	call GetAnyMapTileset
-	ld a, c
-	cp TILESET_POKECENTER
-	jr z, .pokecenter_pokecom
-	cp TILESET_POKECOM_CENTER
-	jr z, .pokecenter_pokecom
-	ret
-.pokecenter_pokecom
-	ld a, [wPrevMapGroup]
-	ld [wLastSpawnMapGroup], a
-	ld a, [wPrevMapNumber]
-	ld [wLastSpawnMapNumber], a
 	ret
 
 LoadMapTimeOfDay: ; 104750
