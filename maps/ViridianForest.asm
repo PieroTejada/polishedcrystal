@@ -1,10 +1,10 @@
-Rpp_MapScriptHeader:
+ViridianForest_MapScriptHeader:
 
 .MapTriggers: db 0
 
 .MapCallbacks: db 0
 
-Rpp_MapEventHeader:
+ViridianForest_MapEventHeader:
 
 .Warps: db 2
 	warp_def 51, 21, 2, NEW_BARK_TOWN

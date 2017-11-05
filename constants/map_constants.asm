@@ -7,20 +7,12 @@ MAP_NONE   EQU 0
 ; map group ids
 	const_def
 	newgroup ;  1
-	mapgroup RPP, 28, 21
+	mapgroup VIRIDIAN_FOREST, 28, 21
 
-	newgroup ;  2
+	newgroup ; 2
 
-	mapgroup POKECENTER_2F, 4,  8
-	mapgroup TRADE_CENTER, 4,  5
-	mapgroup COLOSSEUM, 4,  5
-	mapgroup HIDDEN_TREE_GROTTO, 9,  5
-
-	newgroup ; 3
-
-	mapgroup NEW_BARK_TOWN, 9, 10
-	mapgroup KRISS_HOUSE_1F, 4,  5
 	mapgroup KRISS_HOUSE_2F, 3,  4
+	mapgroup NEW_BARK_TOWN, 9, 10
 
 
 

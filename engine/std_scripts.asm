@@ -1940,31 +1940,4 @@ VendingMachineScript:
 
 TreeGrottoScript:
 CaveGrottoScript:
-	scall _HiddenGrottoInitScript
-	iffalse_endtext
-	closetext
-	playsound SFX_EXIT_BUILDING
-	special FadeOutPalettes
-	pause 15
-	callasm _HiddenGrottoBackupMap
-	warpfacing UP, HIDDEN_TREE_GROTTO, 4, 15
-	end
-
-_HiddenGrottoInitScript:
-	callasm .StoreCurHiddenGrotto
-	opentext
-	farwritetext HiddenGrottoText
-	yesorno
-	end
-
-.StoreCurHiddenGrotto:
-	ld a, [ScriptVar]
-	ld [CurHiddenGrotto], a
-	ret
-
-_HiddenGrottoBackupMap:
-	ld a, [MapGroup]
-	ld [BackupMapGroup], a
-	ld a, [MapNumber]
-	ld [BackupMapNumber], a
-	ret
+	farjumptext HiddenGrottoText

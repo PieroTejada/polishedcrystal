@@ -18,9 +18,8 @@ LoadMapGroupRoof:: ; 1c000
 
 MapGroupRoofs: ; 1c021i
 	db -1 ; group 0
-	db  0 ; group 1
-	db -1 ; group 2
-	db -1 ; group 3
+	db -1 ; group 1
+	db  0 ; group 2
 ; 1c03c
 
 Roofs: ; 1c03c

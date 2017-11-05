@@ -9,7 +9,7 @@ KrissHouse2F_MapScriptHeader:
 KrissHouse2F_MapEventHeader:
 
 .Warps: db 1
-	warp_def 0, 7, 3, KRISS_HOUSE_1F
+	warp_def 0, 7, 2, NEW_BARK_TOWN
 
 .XYTriggers: db 0
 
@@ -56,10 +56,82 @@ KrissHousePoster:
 	describedecoration 0
 
 KrissHouseRadio:
-	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
-	iftrue .NormalRadio
 	checkevent EVENT_LISTENED_TO_INITIAL_RADIO
 	iftrue .AbbreviatedRadio
+
+if DEF(DEBUG)
+	; full pokegear
+	setflag ENGINE_POKEGEAR
+	setflag ENGINE_PHONE_CARD
+	setflag ENGINE_MAP_CARD
+	setflag ENGINE_RADIO_CARD
+	setflag ENGINE_EXPN_CARD
+	; pokedex
+	setflag ENGINE_POKEDEX
+	; all hms
+	givetmhm HM_CUT
+	givetmhm HM_FLY
+	givetmhm HM_SURF
+	givetmhm HM_STRENGTH
+	givetmhm HM_WATERFALL
+	givetmhm HM_WHIRLPOOL
+	; all badges
+	setflag ENGINE_ZEPHYRBADGE
+	setflag ENGINE_HIVEBADGE
+	setflag ENGINE_PLAINBADGE
+	setflag ENGINE_FOGBADGE
+	setflag ENGINE_STORMBADGE
+	setflag ENGINE_MINERALBADGE
+	setflag ENGINE_GLACIERBADGE
+	setflag ENGINE_RISINGBADGE
+	setflag ENGINE_BOULDERBADGE
+	setflag ENGINE_CASCADEBADGE
+	setflag ENGINE_THUNDERBADGE
+	setflag ENGINE_RAINBOWBADGE
+	setflag ENGINE_MARSHBADGE
+	setflag ENGINE_SOULBADGE
+	setflag ENGINE_VOLCANOBADGE
+	setflag ENGINE_EARTHBADGE
+	setevent EVENT_BEAT_FALKNER
+	setevent EVENT_BEAT_BUGSY
+	setevent EVENT_BEAT_WHITNEY
+	setevent EVENT_BEAT_MORTY
+	setevent EVENT_BEAT_CHUCK
+	setevent EVENT_BEAT_JASMINE
+	setevent EVENT_BEAT_PRYCE
+	setevent EVENT_BEAT_CLAIR
+	setevent EVENT_BEAT_BROCK
+	setevent EVENT_BEAT_MISTY
+	setevent EVENT_BEAT_LTSURGE
+	setevent EVENT_BEAT_ERIKA
+	setevent EVENT_BEAT_JANINE
+	setevent EVENT_BEAT_SABRINA
+	setevent EVENT_BEAT_BLAINE
+	setevent EVENT_BEAT_BLUE
+	setevent EVENT_BEAT_ELITE_FOUR
+	setevent EVENT_BEAT_ELITE_FOUR_AGAIN
+	; fly anywhere
+	setflag ENGINE_FLYPOINT_NEW_BARK
+	; cycling road works
+	giveitem BICYCLE
+	; useful items
+	giveitem ITEMFINDER
+	giveitem MASTER_BALL, 99
+	giveitem SHINY_CHARM
+	setflag ENGINE_HAVE_SHINY_CHARM
+	setflag ENGINE_CREDITS_SKIP
+	; good party
+	givepoke MEWTWO, 100, LEFTOVERS
+	givepoke LUGIA, 100, WISE_GLASSES
+	givepoke HO_OH, 100, MUSCLE_BAND
+	; hm slaves
+	givepoke MEW, 100, LEFTOVERS
+	givepoke MEW, 100, LEFTOVERS
+	callasm TeachHMSlaveMoves
+	; intro events
+	addcellnum PHONE_MOM
+endc
+
 	playmusic MUSIC_POKEMON_TALK
 	opentext
 	writetext KrisRadioText1
@@ -74,9 +146,6 @@ KrissHouseRadio:
 	closetext
 	setevent EVENT_LISTENED_TO_INITIAL_RADIO
 	end
-
-.NormalRadio:
-	jumpstd radio1
 
 .AbbreviatedRadio:
 	opentext
@@ -131,3 +200,46 @@ PokemonJournalProfElmText:
 	line "often argue about"
 	cont "research."
 	done
+
+if DEF(DEBUG)
+
+TeachHMSlaveMoves:
+	ld hl, PartyMon4Moves
+	ld a, FLY
+	ld [hli], a
+	ld a, SURF
+	ld [hli], a
+	ld a, STRENGTH
+	ld [hli], a
+	ld a, CUT
+	ld [hl], a
+	ld hl, PartyMon4PP
+	ld a, 15
+	ld [hli], a
+;	ld a, 15
+	ld [hli], a
+;	ld a, 15
+	ld [hli], a
+	ld a, 30
+	ld [hl], a
+	ld hl, PartyMon5Moves
+	ld a, FLASH
+	ld [hli], a
+	ld a, ROCK_SMASH
+	ld [hli], a
+	ld a, WHIRLPOOL
+	ld [hli], a
+	ld a, WATERFALL
+	ld [hl], a
+	ld hl, PartyMon5PP
+	ld a, 20
+	ld [hli], a
+	ld a, 15
+	ld [hli], a
+;	ld a, 15
+	ld [hli], a
+;	ld a, 15
+	ld [hl], a
+	ret
+
+endc
