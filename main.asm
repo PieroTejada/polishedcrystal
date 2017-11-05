@@ -2199,10 +2199,6 @@ GetBGMapTilePalettes::
 .loop
 	ld a, [hl]
 	push hl
-	srl a
-	jr c, .UpperNybble
-
-; .LowerNybble
 	ld hl, TilesetPalettes
 	add [hl]
 	ld l, a
@@ -2210,21 +2206,6 @@ GetBGMapTilePalettes::
 	adc $0
 	ld h, a
 	ld a, [hl]
-	and $f
-	jr .next
-
-.UpperNybble:
-	ld hl, TilesetPalettes
-	add [hl]
-	ld l, a
-	ld a, [TilesetPalettes + 1]
-	adc $0
-	ld h, a
-	ld a, [hl]
-	swap a
-	and $f
-
-.next
 	pop hl
 	ld [de], a
 	res 7, [hl]
